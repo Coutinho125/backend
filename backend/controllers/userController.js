@@ -41,7 +41,7 @@ exports.loginUser = async (req,res) => {
         if (!isPasswordValid) {
             return res.status(401).json({ error: 'Invalid password' });
         }
-        res.json({ message: 'Login successful' });
+        res.json({ message: 'Login successful' , username: user.username, userType: user.userType});
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'Internal server error' });
