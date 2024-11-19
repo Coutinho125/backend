@@ -25,9 +25,7 @@ const propertySchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  amenities: [String],
   images: [String],  // Store image URLs or file paths
-  floorPlan: String,  // Store the floor plan image URL or path
   status: {
     type: String,
     enum: ['available', 'rented', 'removed'],
@@ -36,7 +34,7 @@ const propertySchema = new mongoose.Schema({
   landlord: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: false
+    required: true
   },
   tenantsApplied: [{
     type: mongoose.Schema.Types.ObjectId,

@@ -3,8 +3,9 @@ const Property = require('../models/Property');
 // Add a new property (Landlord only)
 exports.addProperty = async (req, res) => {
   console.log(req.body);
-  const { title, description, address, price, size, numberOfRooms, amenities, images, floorPlan } = req.body;
-  const landlord = req.userId;
+  const { title, description, address, price, size, numberOfRooms, images } = req.body;
+  // const landlord = req.userId;
+  const landlord = "673094b7ec9cc032b6a445cf";
 
   try {
     const newProperty = new Property({
@@ -14,9 +15,7 @@ exports.addProperty = async (req, res) => {
       price,
       size,
       numberOfRooms,
-      amenities,
       images,
-      floorPlan,
       landlord
     });
 
@@ -42,6 +41,7 @@ exports.updateProperty = async (req, res) => {
 exports.getProperties = async (req, res) => {
   try {
     const properties = await Property.find().populate('landlord', 'username email');
+    console.log(properties);
     res.json(properties);
   } catch (err) {
     console.error(err);

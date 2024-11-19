@@ -19,15 +19,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['tenant', 'landlord'],
     required: true
-  },
-  savedProperties: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Property'
-  }],
-  bookingHistory: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Rental'
-  }]
+  }
 });
 
 module.exports = mongoose.model('User', userSchema);

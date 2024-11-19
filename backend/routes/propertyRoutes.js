@@ -3,7 +3,7 @@ const { addProperty, updateProperty, getProperties, searchProperties } = require
 const router = express.Router();
 
 router.post('/add' , addProperty);
-router.put('/edit/:id', updateProperty);
+router.post('/edit/:id', updateProperty);
 router.get('/all', getProperties);
 router.get('/search', searchProperties);  // Advanced search based on filters
 
