@@ -1,4 +1,5 @@
 const Property = require('../models/Property');
+const Booking = require('../models/Booking');
 
 // Add a new property (Landlord only)
 exports.addProperty = async (req, res) => {
@@ -104,13 +105,7 @@ exports.getPropertyById = async (req, res) => {
   console.log("inside getPropertyById")
   try {
     const propertyId = req.params.id;
-
     const property = await Property.findById(propertyId);
-    console.log(property)
-
-    if (!property) {
-      return res.status(404).json({ message: 'Property not found' });
-    }
 
     res.json(property);
   } catch (error) {
@@ -118,6 +113,20 @@ exports.getPropertyById = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
+exports.getPropertyDataById = async(propertyId) => {
+  try {
+    const property = await Property.findById(propertyId);
+
+    if (!property) {
+      return
+    }
+    return property;
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
 
 exports.deletePropertyById = async (req, res) => {
   console.log("inside deletePropertyById")
@@ -160,10 +169,22 @@ exports.applyProperty = async (req, res) => {
 
     property.tenantsApplied.push(tenantId);
 
+    const landlordId = property.landlord;
+    const price = property.price;
+    console.log(landlordId);
+
+    const newBooking = new Booking({
+      tenantId,
+      landlordId,
+      propertyId,
+      price
+    });
+
     // Save the updated property
     await property.save();
+    await newBooking.save();
 
-    res.status(200).json({ message: 'Application submitted successfully', property });
+    res.status(200).json({ message: 'Application submitted successfully', property, booking: newBooking });
   } catch (error) {
     console.error('Error deleting property:', error);
     res.status(500).json({ message: 'Server error', error: error.message });

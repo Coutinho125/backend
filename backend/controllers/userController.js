@@ -59,3 +59,15 @@ exports.getUsers = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+exports.getUserById = async (userId) => {
+    try {
+        const user = await User.findById(userId);
+        console.log("user found")
+        console.log(user)
+        return user
+    } catch (error) {
+        console.error('Error deleting property:', error);
+        throw new Error(error)
+    }
+}

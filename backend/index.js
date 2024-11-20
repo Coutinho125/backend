@@ -5,6 +5,7 @@ const app = express()
 const database = require('./config/db');
 const propertyRoutes = require('./routes/propertyRoutes');
 const rentalRoutes = require('./routes/rentalRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
 const userRoutes = require('./routes/userRoutes');
 
 const cors = require('cors');
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/user', userRoutes);
 app.use('/api/properties', propertyRoutes);
 app.use('/api/rentals', rentalRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 database.on('connected', () => {
     console.log('Connected to MongoDB');
